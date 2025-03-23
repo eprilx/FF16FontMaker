@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "FF16FontMaker": {
+      "commandName": "Project",
+      "commandLineArgs": " --ff16fnt2fnt -f arianlt-demi.fnt",
+      "workingDirectory": "E:\\C\\FF16FontMaker\\FF16FontMaker\\bin\\Debug\\net8.0"
+    }
+  }
+}
