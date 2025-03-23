@@ -1,0 +1,77 @@
+name: Check build
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+    paths-ignore: [ "**.md" ]
+  pull_request:
+    branches: [ master ]
+    paths-ignore: [ "**.md" ]
+
+jobs:
+  check-console-win:
+    runs-on: windows-latest
+    
+    steps:
+    # setup  
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: Checkout submodules
+      run: git submodule update --init --recursive
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 8.0.x
+    - uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Get version
+      uses: naminodarie/get-net-sdk-project-versions-action@v1
+      id: get-version
+      with:
+        proj-path: ./FF16FontMaker/FF16FontMaker.csproj
+
+    - name: publish FF16FontMaker
+      run: msbuild .\FF16FontMaker\FF16FontMaker.csproj -t:restore -t:Build -t:Publish /p:PublishDir="../publish/console/windows" /p:Configuration=Release /p:SelfContained=False /p:PublishReadyToRun=False /p:PublishTrimmed=False
+
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: windows_${{steps.get-version.outputs.assembly-version}}
+        path: ./publish/console/windows
+
+
+  check-console-linux:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # setup  
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: Checkout submodules
+      run: git submodule update --init --recursive
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore FF16FontMaker/FF16FontMaker.csproj
+    - name: Build
+      run: dotnet build  FF16FontMaker/FF16FontMaker.csproj --no-restore
+    - name: Test
+      run: dotnet test FF16FontMaker/FF16FontMaker.csproj --no-build --verbosity normal
+    - name: Publish
+      run: dotnet publish FF16FontMaker/FF16FontMaker.csproj -c Release -o "publish/console/linux/"
+      
+    - name: Get version
+      uses: naminodarie/get-net-sdk-project-versions-action@v1
+      id: get-version
+      with:
+        proj-path: ./FF16FontMaker/FF16FontMaker.csproj
+
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: linux_${{steps.get-version.outputs.assembly-version}}
+        path: /home/runner/work/FF16FontMaker/FF16FontMaker/publish/console/linux
