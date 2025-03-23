@@ -1,0 +1,8 @@
+[submodule "FF16FontMaker/Gibbed.IO"]
+	path = FF16FontMaker/Gibbed.IO
+	url = https://github.com/gibbed/Gibbed.IO.git
+	branch = main
+[submodule "FF16FontMaker/NDesk.Options"]
+	path = FF16FontMaker/NDesk.Options
+	url = https://github.com/gibbed/NDesk.Options.git
+	branch = main
