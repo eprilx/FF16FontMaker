@@ -10,11 +10,11 @@ jobs:
     steps:
     # setup  
     - name: checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         submodules: recursive
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
     - uses: microsoft/setup-msbuild@v1.0.2
