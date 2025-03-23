@@ -35,7 +35,7 @@ jobs:
       run: msbuild .\FF16FontMaker\FF16FontMaker.csproj -t:restore -t:Build -t:Publish /p:PublishDir="../publish/console/windows" /p:Configuration=Release /p:SelfContained=False /p:PublishReadyToRun=False /p:PublishTrimmed=False
 
     - name: Upload a Build Artifact
-      uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-artifact@v3
       with:
         name: windows_${{steps.get-version.outputs.assembly-version}}
         path: ./publish/console/windows
@@ -71,7 +71,7 @@ jobs:
         proj-path: ./FF16FontMaker/FF16FontMaker.csproj
 
     - name: Upload a Build Artifact
-      uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-artifact@v3
       with:
         name: linux_${{steps.get-version.outputs.assembly-version}}
         path: /home/runner/work/FF16FontMaker/FF16FontMaker/publish/console/linux
