@@ -17,7 +17,7 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
-    - uses: microsoft/setup-msbuild@v1.0.2
+    - uses: microsoft/setup-msbuild@v1.1.3
 
      # environmental variables
     - run: echo "PROJC=./FF16FontMaker/FF16FontMaker.csproj" >> $env:GITHUB_ENV
