@@ -50,7 +50,7 @@ jobs:
     # RELEASE
     - name: Release
       run: |
-          gh release create ${{ env.VERSIONC }} -t "${{env.NAME}} v${{env.VERSIONC}}" -d -F ${{ env.FILES }}
+          gh release create ${{ env.VERSIONC }} -t "${{env.NAME}} v${{env.VERSIONC}}" -d -F CHANGELOG.md ${{ env.FILES }}
       env:
         FILES: ${{env.FINALOUT}}/${{env.GUI}}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
